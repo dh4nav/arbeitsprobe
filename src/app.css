@@ -1,0 +1,4 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+@import '@shoelace-style/shoelace/dist/themes/light.css';
