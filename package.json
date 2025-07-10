@@ -24,6 +24,9 @@
 		"vite-plugin-copy": "^0.1.6"
 	},
 	"dependencies": {
-		"@shoelace-style/shoelace": "^2.20.1"
+		"@shoelace-style/shoelace": "^2.20.1",
+		"langchain": "^0.3.29",
+		"ollama": "^0.5.16",
+		"sqlite3": "^5.1.7"
 	}
 }
