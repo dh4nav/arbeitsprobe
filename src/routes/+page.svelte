@@ -188,14 +188,5 @@
     Senden
   </button>
 
-  {#if response}
-    <div class="mt-4 p-4 bg-gray-100 rounded">{response}</div>
-  {/if}
-
-  <div class="max-w-5xl mx-auto min-w-[500px] ">
-    <p class="mt-4 text-gray-600 text-sm">
-      You selected: {selectedAddress || '(no address)'} / {selectedTextTemplate || '(no text template)'}
-    </p>
-  </div>
 
 </div>
