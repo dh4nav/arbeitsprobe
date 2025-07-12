@@ -2,9 +2,10 @@
   export let endpoint = ''
   export let placeholder = 'Select...'
   export let label = ''
-  export let selected = ''
+  export let selected
+  export let format = (x) => x;
 
-  let items = []
+  let raw_items = []
   let search = selected
   let isOpen = false
 
@@ -12,7 +13,8 @@
   async function loadItems() {
     try {
       const res = await fetch(endpoint)
-      items = await res.json()
+      raw_items = await res.json()
+      raw_items //.map(r => r.name + ", " + r.street + ", " + r.postal_code + " " + r.city)
     } catch (e) {
       console.error('Failed to load items from', endpoint, e)
     }
@@ -20,21 +22,32 @@
 
   // Automatically load on first open
   function open() {
-    if (items.length === 0) {
+    if (raw_items.length === 0) {
       loadItems()
     }
     isOpen = true
   }
 
-  $: filtered = search
-    ? items.filter((item) =>
-        item.toLowerCase().includes(search.toLowerCase())
-      )
-    : items
+  // $: filtered = search
+  //   ? items.filter((item) =>
+  //       item.toLowerCase().includes(search.toLowerCase())
+  //     )
+  //   : items
 
-  function selectItem(item) {
-    selected = item
-    search = item
+$: filtered = search
+  ? raw_items
+      .map((item, index) => ({
+        index,
+        match: Object.values(item).join(' ').toLowerCase().includes(search.toLowerCase())
+      }))
+      .filter(entry => entry.match)
+      .map(entry => entry.index)
+  : raw_items.map((_, index) => index);
+
+  function selectItem(index) {
+    console.log(index)
+    selected = raw_items[index]
+    search = ""
     isOpen = false
   }
 </script>
@@ -49,12 +62,14 @@
       class="w-full px-3 py-2 outline-none"
       placeholder={placeholder}
       bind:value={search}
-      on:focus={open}
+      on:focus={loadItems}
+      on:input={open}
       on:input={() => (isOpen = true)}
     />
     <button
       type="button"
       class="px-3 text-gray-500 hover:text-black"
+      on:focus={loadItems}
       on:click={() => (isOpen = !isOpen)}
     >
       ▼
@@ -65,12 +80,12 @@
     <ul
       class="absolute z-10 mt-1 w-full max-h-48 overflow-y-auto border bg-white rounded shadow"
     >
-      {#each filtered as item}
+      {#each filtered as item, index}
         <li
           class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
           on:click={() => selectItem(item)}
         >
-          {item}
+          {format(raw_items[item])}
         </li>
       {/each}
 

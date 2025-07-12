@@ -11,6 +11,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
+		"@sveltejs/adapter-node": "^5.2.13",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/forms": "^0.5.9",
@@ -24,9 +25,13 @@
 		"vite-plugin-copy": "^0.1.6"
 	},
 	"dependencies": {
+		"@langchain/community": "^0.3.48",
 		"@shoelace-style/shoelace": "^2.20.1",
+		"better-sqlite3": "^11.10.0",
+		"jspdf": "^3.0.1",
 		"langchain": "^0.3.29",
 		"ollama": "^0.5.16",
+		"sqlite": "^5.1.1",
 		"sqlite3": "^5.1.7"
 	}
 }

@@ -1,16 +1,47 @@
 <script>
   import ComboBox from '$lib/ComboBox.svelte'
+  import { jsPDF } from 'jspdf';
 
   let userInput = ''
   let response = ''
   let mainTextVar = ''
-  let selectedAddress = ''
-  let selectedTextTemplate = ''
+  let selectedAddress;
+  let enteredAddress = ''
+  let enteredName = ''
+  let selectedTextTemplate;
+  let enteredTextTemplate = ''
 
   let city = '';
   let address = '';
   let text = '';
   let loading = false;
+
+  function drawParagraph(doc, text, x, y, maxWidth, lineHeightMm) {
+    const lines = doc.splitTextToSize(text, maxWidth);
+    lines.forEach(line => {
+      doc.text(line, x, y);
+      y += lineHeightMm;
+    });
+    return y; // return new y position
+  }
+
+  function downloadPdf() {
+    const doc = new jsPDF();
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(35);
+    doc.text('TITELGRAPHIK', 15, 20);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(13);
+    drawParagraph(doc, enteredAddress, 25, 45, 140, 7);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(12);
+    drawParagraph(doc, enteredTextTemplate, 25, 90, 140, 6);
+
+    doc.save('download.pdf');
+  }
 
   async function fetchData() {
     loading = true;
@@ -27,17 +58,63 @@
   }
 
   async function sendQuery() {
-    const res = await fetch('/api/ask', {
+    const res = await fetch('/api/llms', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: userInput })
     })
     const data = await res.json()
-    response = data.answer
+    enteredTextTemplate = data.response
   }
 
   async function fillText() {
     mainTextVar = String(int(mainTextVar)+1)
+  }
+
+  import { onMount } from 'svelte';
+
+  let initialized = false;
+  let debounceTimeoutAddress;
+  let debounceTimeoutText;
+
+  // Reactive watcher with debounce and skip-initial logic
+  $: if (initialized && selectedAddress !== undefined) {
+    clearTimeout(debounceTimeoutAddress);
+    debounceTimeoutAddress = setTimeout(() => {
+      handleSelectionChangeAddress(selectedAddress);
+    }, 300); // debounce delay in ms
+  }
+
+  $: if (initialized && selectedTextTemplate !== undefined) {
+    clearTimeout(debounceTimeoutText);
+    debounceTimeoutText = setTimeout(() => {
+      handleSelectionChangeText(selectedTextTemplate);
+    }, 300); // debounce delay in ms
+  }
+
+  // Set initialized flag after first render
+  onMount(() => {
+    initialized = true;
+  });
+
+  function handleSelectionChangeAddress(value) {
+    console.log("Debounced selection:", value);
+    enteredAddress = selectedAddress.name + "\n" + selectedAddress.street + "\n" + selectedAddress.postal_code + " " + selectedAddress.city; 
+  }
+
+  function formatAddressTemplate(value) {
+    console.log("format address selection:", value);
+    return value.name + "," + value.street + "\n" + value.postal_code + " " + value.city; 
+  }
+
+  function formatTextTemplate(value) {
+    console.log("format text selection:", value.beschreibung);
+    return value.beschreibung; 
+  }
+
+  function handleSelectionChangeText(value) {
+    console.log("Debounced selection:", value);
+    enteredTextTemplate = selectedTextTemplate.content.replace(/\\n/g, '\n');
   }
 </script>
 
@@ -55,15 +132,16 @@
       <div class="space-y-6">
         <ComboBox
           bind:selected={selectedAddress}
-          endpoint="/api/cities"
-          placeholder="Search or select a city"
+          endpoint="/api/addresses"
+          placeholder="Adresse suchen oder auswählen"
+          format={formatAddressTemplate}
         />
       </div>
       <textarea
       id="address"
       class="w-full p-2 border-4 rounded mb-4"
       rows="4"
-      bind:value={userInput}
+      bind:value={enteredAddress}
       placeholder="Adresse eingeben..."
       ></textarea>
     </div>
@@ -75,20 +153,19 @@
     <div class="space-y-6 pb-2">
       <ComboBox
         bind:selected={selectedTextTemplate}
-        endpoint="/api/countries"
-        placeholder="Search or select a country"
+        endpoint="/api/textTemplates"
+        placeholder="Textvorlage suchen oder auswählen"
+        format={formatTextTemplate}
       />
     </div>
     <textarea
       id="maintext"
       class="w-full p-2 border-4 rounded "
       rows="20"
-      bind:value={mainTextVar}
-      placeholder="Text eingeben..."
-      on:focus={fillText}
+      bind:value={enteredTextTemplate}
     ></textarea>
   </div>
-  <button id="makePDF" class=" text-white px-4 py-2 rounded-xl bg-blue-600  bottom-10 mb-10" on:click={sendQuery}>
+  <button id="makePDF" class=" text-white px-4 py-2 rounded-xl bg-blue-600  bottom-10 mb-10" on:click={downloadPdf}>
     PDF Erzeugen
   </button>
 
@@ -107,7 +184,7 @@
     </div>
   </div>
 
-  <button id="sendAI" class=" text-white px-4 py-2 rounded-xl bg-purple-600" on:click={sendQuery}>
+  <button id="sendAI" class=" text-white px-4 py-2 rounded-xl bg-blue-600" on:click={sendQuery}>
     Senden
   </button>
 
