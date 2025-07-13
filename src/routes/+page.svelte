@@ -43,20 +43,6 @@
     doc.save('download.pdf');
   }
 
-  async function fetchData() {
-    loading = true;
-    address = text = '';
-    const res = await fetch('/api/llms', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: city })
-    });
-    const data = await res.json();
-    address = data.address;
-    text = data.text;
-    loading = false;
-  }
-
   async function sendQuery() {
     const res = await fetch('/api/llms', {
       method: 'POST',
@@ -104,7 +90,7 @@
 
   function formatAddressTemplate(value) {
     console.log("format address selection:", value);
-    return value.name + "," + value.street + "\n" + value.postal_code + " " + value.city; 
+    return value.name + ", " + value.street + ", " + value.postal_code + " " + value.city; 
   }
 
   function formatTextTemplate(value) {
@@ -171,7 +157,7 @@
 
   <div class="relative items-start">
     <div>
-      <label for="aiquery"  class="absolute -top-1 right-full pr-5 text-2xl">KI&NonBreakingSpace;Frage</label>
+      <label for="aiquery" class="absolute -top-1 right-full pr-5 text-2xl">KI&NonBreakingSpace;Frage</label>
     </div>
     <div>
       <textarea

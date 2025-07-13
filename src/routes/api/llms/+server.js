@@ -12,7 +12,7 @@ console.log(rrequest)
   try {
 
     const ollamaresponse = await ollama.generate({
-  model: 'mistral',
+  model: 'llama3',
   prompt: "Du bist eine sekretärin, die nach dem nachfolgenden auftrag einen brief schreiben soll. Der brief soll in deutsch sein (außer im auftrag ausdrücklich anders gewünscht), und sachlich und höflich sein. Füge keinen sonstigen text hinzu, deine antwort soll ausschließlich der text des briefes sein. Der Auftrag: " + rrequest.query,
 })
 console.log(ollamaresponse)
