@@ -171,7 +171,7 @@
   </div>
 
   <button id="sendAI" class=" text-white px-4 py-2 rounded-xl bg-blue-600" on:click={sendQuery}>
-    Senden
+    An KI Senden
   </button>
 
 
