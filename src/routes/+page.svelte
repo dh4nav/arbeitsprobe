@@ -157,7 +157,7 @@
 
   <div class="relative items-start">
     <div>
-      <label for="aiquery" class="absolute -top-1 right-full pr-5 text-2xl">KI&NonBreakingSpace;Frage</label>
+      <label for="aiquery" class="absolute -top-1 right-full pr-5 text-2xl">KI-Unterstützung</label>
     </div>
     <div>
       <textarea
@@ -165,7 +165,7 @@
           class="w-full p-2 border-4 rounded"
           rows="4"
           bind:value={userInput}
-          placeholder="Frage eingeben..."
+          placeholder="Beschreiben Sie die von der KI zu entwerfende Korrespondenz..."
         ></textarea>
     </div>
   </div>
