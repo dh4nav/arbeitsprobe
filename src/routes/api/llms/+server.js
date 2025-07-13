@@ -13,7 +13,7 @@ console.log(rrequest)
 
     const ollamaresponse = await ollama.generate({
   model: 'llama3',
-  prompt: "Du bist eine sekretärin, die nach dem nachfolgenden auftrag einen brief schreiben soll. Der brief soll in deutsch sein (außer im auftrag ausdrücklich anders gewünscht), und sachlich und höflich sein. Füge keinen sonstigen text hinzu, deine antwort soll ausschließlich der text des briefes sein. Der Auftrag: " + rrequest.query,
+  prompt: "Du bist eine sekretärin, die nach dem nachfolgenden auftrag einen brief schreiben soll. Der brief soll in deutsch sein (außer im auftrag ausdrücklich anders gewünscht), und sachlich und höflich sein. Achte auf sprachliche perfektion, denke im Zweifel lieber etwas länger nach. Füge keinen sonstigen text hinzu, deine antwort soll ausschließlich der text des briefes sein. Füge nach der Grußformel keinen Namen an. Der Auftrag: " + rrequest.query,
 })
 console.log(ollamaresponse)
  return new Response(JSON.stringify(ollamaresponse), { status: 200 });
