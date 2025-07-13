@@ -11,6 +11,9 @@
   let selectedTextTemplate;
   let enteredTextTemplate = ''
 
+  let KISendIsActive = true;
+
+
   let city = '';
   let address = '';
   let text = '';
@@ -44,13 +47,20 @@
   }
 
   async function sendQuery() {
-    const res = await fetch('/api/llms', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: userInput })
-    })
-    const data = await res.json()
-    enteredTextTemplate = data.response
+    KISendIsActive = false;
+    try{
+      const res = await fetch('/api/llms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: userInput })
+      })
+      const data = await res.json()
+      enteredTextTemplate = data.response
+    } catch { 
+      console.log("KI Query Error");
+      KISendIsActive = true;
+    }
+    KISendIsActive = true;
   }
 
   async function fillText() {
@@ -170,8 +180,9 @@
     </div>
   </div>
 
-  <button id="sendAI" class=" text-white px-4 py-2 rounded-xl bg-blue-600" on:click={sendQuery}>
-    An KI Senden
+  <button id="sendAI" on:click={sendQuery} class=" text-white px-4 py-2 rounded-xl  
+    {KISendIsActive ? 'bg-blue-600' : 'bg-purple-500'}">
+  {KISendIsActive ? 'An KI Senden' : 'Bitte warten...'}
   </button>
 
 
