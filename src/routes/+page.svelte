@@ -157,7 +157,7 @@
 
   <div class="relative items-start">
     <div>
-      <label for="aiquery" class="absolute -top-1 right-full pr-5 text-2xl">KI-Unterstützung</label>
+      <label for="aiquery" class="absolute -top-1 right-full pr-5 text-2xl">KI&#8209;Unterstützung</label>
     </div>
     <div>
       <textarea
