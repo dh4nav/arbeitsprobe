@@ -68,9 +68,9 @@ npm install
 
 
 ```
-* Starten des Webservers
+#### Starten des Webservers
 
-* Entwicklerbetrieb
+##### Entwicklerbetrieb
 
 Der Entwicklerbetrieb kann mit 
 
@@ -82,7 +82,7 @@ npm run dev
 
 gestartet werden. Die Webseite ist dann unter der angezeigten Adresse lokal erreichbar.
 
-* Produktivbetrieb
+##### Produktivbetrieb
 
 An dieser Stelle muss  in die Dateil Caddyfile im Grundverzeichnis des Repositories statt der Beispieldomain beispiel.do die tatsächliche Domain des Webservers eingetragen werden.
 
