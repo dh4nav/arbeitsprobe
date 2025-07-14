@@ -6,31 +6,31 @@ Diese Arbeitsprobe zeit beispielhaft ein Korrespondenzformular mit Adress- und S
 
 ### Beschreibung der Elemente der Bedienoberfläche von oben nach unten
 
-* Adressauswahlelement
+#### Adressauswahlelement
 
 Das Adressauswahlelement dient sowohl zur Auswahl der in der Datenbank gespeicherten Adressen als auch als Suchfeld. Anklicken des Dreieckes rechts offnet die Liste der gespeicherten Adressen. Eingeben eines Teils einer Adresse in das Eingabefeld links daneben filtert die Liste der Adressen mit dem Suchbegriff
 
-* Adresseingabefeld
+#### Adresseingabefeld
 
 Das Adresseingabefeld zeigt die ausgewählte Adresse sobald eine aus der Datenbank ausgewählt wurde, dient aber auch zum Editieren oder komplett manuellen Eingeben einer Adresse
 
-* Textauswahlelement
+#### Textauswahlelement
 
 Analog zum Adressauswahlelement zeigt das Textauswahlelement die gespeicherten Standardtexte, und erlaubt ebenfalls die Suche darin.
 
-* Texteingabefeld
+#### Texteingabefeld
 
 Das Texteingabefeld zeigt den ausgewählten Text, erlaubt aber auch, den Text zu editieren oder frei einzugeben. 
 
-* PDF-Erzeugen-Knopf
+#### PDF-Erzeugen-Knopf
 
 Das Anklicken des PDF-Erzeugen-Knopfes erzeugt ein als Brief formatiertes PDF mit der im Adresseingabefeld befindlichen Adresse sowie dem im Texteingabefeld befindlichen Text und läd dieses auf den Webbrowser des Benutzers herunter
 
-* KI-Anfrageeingabefeld
+#### KI-Anfrageeingabefeld
 
 Im KI-Anfrageeingabefeld kann eine Anfrage an die KI eingegeben werden, nach welchder die KI einen Textentwurf erstellt. Dieser wird dann im Texteingabefeld eingefügt
 
-* KI-Anfrage-Knopf
+#### KI-Anfrage-Knopf
 
 Der KI-Anfrage-Knopf schickt die im KI-Anfrageeingabefeld eingegebene Anfrage an die KI ab. Bitte beachten Sie, dass die Verarbeitung der Anfrage 1 bis 2 Minuten dauern kann. 
 
@@ -46,7 +46,7 @@ Zusätzlich ist noch ein Reverse Proxy zur Lastverteilung und entkopplung des Ba
 
 Die Demonstrationswebseite kann auf einem Linuxserver oder einem Äquivalent (Kontainer, Vagrant, etc) installiert werden.
 
-* Installation der Voraussetzungen
+#### Installation der Voraussetzungen
 
 ```bash
 
@@ -58,7 +58,7 @@ ollama pull llama3:latest
 
 ```
 
-* Klonen und Installation des Repositories
+#### Klonen und Installation des Repositories
 
 ```bash
 
