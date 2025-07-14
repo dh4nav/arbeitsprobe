@@ -1,0 +1,13 @@
+[Unit]
+Description=SvelteKit App
+After=network.target ollama.service
+
+[Service]
+ExecStart=/usr/bin/node build/index.js
+Restart=always
+User=USER
+Environment=NODE_ENV=production
+WorkingDirectory=/home/USER/arbeitsprobe
+
+[Install]
+WantedBy=multi-user.target

@@ -181,7 +181,7 @@
   </div>
 
   <button id="sendAI" on:click={sendQuery} class=" text-white px-4 py-2 rounded-xl  
-    {KISendIsActive ? 'bg-blue-600' : 'bg-purple-500'}">
+    {KISendIsActive ? 'bg-blue-600 title="Auftrag an KI senden"' : 'bg-purple-500 title="Auftrag wird von der KI verarbeitet (kann bis zu einer Minute dauern)"'}">
   {KISendIsActive ? 'An KI Senden' : 'Bitte warten...'}
   </button>
 
